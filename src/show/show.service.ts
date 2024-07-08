@@ -24,7 +24,7 @@ export class ShowService {
   }
 
   getAll() {
-    return this.showRepository;
+    return this.showRepository.find();
   }
 
   async getListByCategory(category: number) {

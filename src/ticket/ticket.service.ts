@@ -18,11 +18,17 @@ export class TicketService {
       where: { id: showId },
     });
     const totalPrice = showInfo.price * count;
-    return this.ticketRepository.save({
+    return await this.ticketRepository.save({
       showId: showId,
       count: count,
       totalPrice: totalPrice,
       date: showInfo.date,
+    });
+  }
+
+  async getMy(userId: number) {
+    return await this.ticketRepository.find({
+      where: { id: userId },
     });
   }
 }

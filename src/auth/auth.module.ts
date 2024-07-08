@@ -6,6 +6,8 @@ import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 
 import { JwtStrategy } from './jwt.strategy';
+import { ShowModule } from 'src/show/show.module';
+import { TicketModule } from 'src/ticket/ticket.module';
 
 @Module({
   imports: [
@@ -16,7 +18,9 @@ import { JwtStrategy } from './jwt.strategy';
       }),
       inject: [ConfigService],
     }),
-    UserModule, // 추가!
+    UserModule,
+    ShowModule,
+    TicketModule,
   ],
   providers: [JwtStrategy],
 })
