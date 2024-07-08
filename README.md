@@ -20,6 +20,7 @@
   "email":"이메일@메일.com",
   "password":"비밀번호"
 }
+```
 
 내 정보 조회(Get localhost:3306/user/profile Bearer 토큰 필요)
 

@@ -1,12 +1,22 @@
-import { Body, Controller, Get, Post, Param, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Param,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { ShowService } from './show.service';
 import { CreateShowDto } from './dto/create-show.dto';
+import { RolesGuard } from 'src/auth/roles.guard';
 
 @Controller('show')
 export class ShowController {
   constructor(private readonly showService: ShowService) {}
 
   @Post('/')
+  @UseGuards(RolesGuard)
   async create(@Body() createShowDto: CreateShowDto) {
     return await this.showService.create(createShowDto);
   }
@@ -17,8 +27,8 @@ export class ShowController {
   }
 
   @Get('/')
-  async getAll() {
-    return await this.showService.getAll();
+  getAll() {
+    return this.showService.getAll();
   }
 
   @Get('/:showId')

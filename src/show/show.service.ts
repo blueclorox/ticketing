@@ -11,27 +11,38 @@ export class ShowService {
     private showRepository: Repository<Show>,
   ) {}
 
-  create(createShowDto: CreateShowDto) {
+  async create(createShowDto: CreateShowDto) {
     const dateString = JSON.stringify(createShowDto.date);
-    return this.showRepository.save({
+    return await this.showRepository.save({
       createShowDto,
       date: dateString,
     });
   }
 
-  getOne(id: number) {
-    return this.showRepository.findOne({ where: { id } });
+  async getOne(id: number) {
+    return await this.showRepository.findOne({ where: { id } });
   }
 
   getAll() {
     return this.showRepository;
   }
 
-  getListByCategory(category: number) {
-    return this.showRepository.find({ where: { category } });
+  async getListByCategory(category: number) {
+    return await this.showRepository.find({ where: { category } });
   }
 
-  getSearchByTitle(title: string) {
-    return this.showRepository.find({ where: { title } });
+  async getSearchByTitle(title: string) {
+    return await this.showRepository.find({ where: { title } });
+  }
+
+  async updateSeats(count: number, showId: number) {
+    const showData = await this.showRepository.findOne({
+      where: { id: showId },
+    });
+    const updateSeats = showData.seatsLeft - count;
+    return await this.showRepository.update(
+      { id: showId },
+      { seatsLeft: updateSeats },
+    );
   }
 }
