@@ -34,7 +34,7 @@ export class Schedule {
   @ManyToOne((type) => Show, (show) => show.schedule)
   show: Show;
 
-  @ManyToOne((type) => Book, { onDelete: true })
+  @ManyToOne((type) => Book, { onDelete: 'CASCADE' })
   book: Book;
 
   @OneToOne((type) => Seat, (seat) => seat.schedule)
