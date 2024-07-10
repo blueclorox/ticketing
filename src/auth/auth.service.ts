@@ -6,6 +6,7 @@ import { Repository } from 'typeorm';
 import { DEFAULT_CUSTOMER_POINT } from 'src/constants/point.constant';
 import { ConfigService } from '@nestjs/config';
 import bcrypt from 'bcrypt';
+import { SignInDto } from './dtos/sign-in.dto';
 
 @Injectable()
 export class AuthService {
@@ -41,5 +42,23 @@ export class AuthService {
     delete user.password;
 
     return user;
+  }
+
+  //findOneBy는 select를 쓸 수 없다
+  async validateUser({ email, password }: SignInDto) {
+    const user = await this.userRepository.findOne({
+      where: { email },
+      select: { id: true, password: true },
+    });
+    const isPasswordMatched = bcrypt.compareSync(
+      password,
+      user?.password ?? '',
+    );
+
+    if (!user || isPasswordMatched) {
+      return null;
+    }
+
+    return { id: user.id };
   }
 }
