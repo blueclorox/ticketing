@@ -41,6 +41,12 @@ export class AuthController {
   @UseGuards(AuthGuard('local'))
   @Post('sign-in')
   async signIn(@Request() req, @Body() signInDto: SignInDto) {
-    return req.user;
+    const data = this.authService.signIn(req.user.id);
+
+    return {
+      statusCode: HttpStatus.OK,
+      message: '로그인에 성공했습니다',
+      data,
+    };
   }
 }

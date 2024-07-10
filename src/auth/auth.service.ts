@@ -7,11 +7,13 @@ import { DEFAULT_CUSTOMER_POINT } from 'src/constants/point.constant';
 import { ConfigService } from '@nestjs/config';
 import bcrypt from 'bcrypt';
 import { SignInDto } from './dtos/sign-in.dto';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly configService: ConfigService,
+    private readonly jwtService: JwtService,
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
   ) {}
@@ -41,7 +43,14 @@ export class AuthService {
     });
     delete user.password;
 
-    return user;
+    return this.signIn(user.id);
+  }
+
+  signIn(userId: number) {
+    const payload = { id: userId };
+    const accessToken = this.jwtService.sign(payload);
+
+    return accessToken;
   }
 
   //findOneBy는 select를 쓸 수 없다
