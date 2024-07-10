@@ -31,12 +31,12 @@ export class Schedule {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToOne((type) => Show, (show) => show.schedule)
+  @ManyToOne(() => Show, (show) => show.schedule)
   show: Show;
 
-  @ManyToOne((type) => Book, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Book, { onDelete: 'CASCADE' })
   book: Book;
 
-  @OneToOne((type) => Seat, (seat) => seat.schedule)
+  @OneToOne(() => Seat, (seat) => seat.schedule)
   seat: Seat;
 }

@@ -29,7 +29,7 @@ export class Seat {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @OneToOne((type) => Schedule, (schedule) => schedule.seat)
+  @OneToOne(() => Schedule, (schedule) => schedule.seat)
   @JoinColumn()
   schedule: Schedule;
 }

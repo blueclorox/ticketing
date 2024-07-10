@@ -38,6 +38,6 @@ export class Show {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @OneToMany((type) => Schedule, (schedule) => schedule.show, { cascade: true })
+  @OneToMany(() => Schedule, (schedule) => schedule.show, { cascade: true })
   schedule: Schedule[];
 }

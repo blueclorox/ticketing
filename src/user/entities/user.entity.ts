@@ -28,7 +28,9 @@ export class User {
 
   @IsNotEmpty({ message: '비밀번호를 입력해 주세요.' })
   @IsStrongPassword()
-  @Column()
+  // select 기본값 지정은 find로 가져왔을때에만 영향을 준다
+  // create의 결과를 반환할땐 적용되지 않음
+  @Column({ select: false })
   password: string;
 
   @IsNotEmpty({ message: '닉네임을 입력해 주세요.' })
@@ -40,7 +42,7 @@ export class User {
   points: number;
 
   @IsBoolean()
-  @Column()
+  @Column({ default: false })
   isAdmin: boolean;
 
   @CreateDateColumn()
@@ -49,6 +51,6 @@ export class User {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @OneToMany((type) => Book, (book) => book.user)
+  @OneToMany(() => Book, (book) => book.user)
   books: Book[];
 }
