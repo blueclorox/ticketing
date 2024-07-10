@@ -8,4 +8,5 @@ export const ConfigModuleValidationSchema = Joi.object({
   DB_PORT: Joi.number().required(),
   DB_NAME: Joi.string().required(),
   DB_SYNC: Joi.boolean().required().default(true),
+  PASSWORD_HASH_ROUNDS: Joi.number().default(10),
 });
